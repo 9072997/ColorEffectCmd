@@ -12,7 +12,7 @@ Our output matrix looks very similar. Lets call our output values `R`, `G`, `B`,
 ```
 [  R  G  B  A  D  ]
 ```
-We get to pick a 5x5 matrix that will transform our input data and give us our output data. Each column in the matrix corresponds to an output color in our output matrix. Each row represents corresponds to an input channel from our input matrix. For example, if the first column of our 5x5 matrix looked like this:
+We get to pick a 5x5 matrix that will transform our input data and give us our output data. Each column in the matrix corresponds to an output color in our output matrix. Each row corresponds to an input channel from our input matrix. For example, if the first column of our 5x5 matrix looked like this:
 ```
 0.1
 0.2
@@ -65,6 +65,13 @@ This is a good example of why, when testing, it is recommended to use the "Previ
 The application includes a "Save" and "Install" button. The save button saves your current matrix to "AppData\Local\ColorEffectCmd\matrix.txt". The install button copies the EXE from it's current location to "AppData\Local\ColorEffectCmd\ColorEffectCmd.exe" and sets it to run at login with the `/h` flag (to hide the window).
 
 "Uninstall" just removes that launch-at-login entry
+
+## Command Line Flags
+- `/h`: (hide) Immediately apply the saved matrix and minimize to tray
+- `/w`: (windowed) Load the saved matrix file and launch in windowed mode.
+
+## Windowed Mode
+Windowed mode uses `MagSetColorEffect` rather than `MagSetFullscreenColorEffect`. This is likely less-performant, since we have to explicitly re-draw the window with a timer. The advantage is that it allows you to apply the effect to only a portion of your desktop. When the application first launches, it will be a normal window that applies the color effect to anything under it. If you maximize the window, it will go full-screen on the current monitor. To exit full-screen, make sure the ColorEffectCmd window is active and press escape.
 
 ## Compiling
 This API docs say it doesn't work under [WoW64](https://en.wikipedia.org/wiki/WoW64), so you **must** use a 64-bit binary on a 64-bit computer. My testing disagrees with this (32-bit seems to work everywhere). YMMM. There is a build.bat that can be run under the Visual Studio Developer Tools Command Prompt. See the releases page for a pre-compiled binary.

@@ -14,6 +14,9 @@
 HWND hEdit[5][5];
 HWND hButtonPreview, hButtonSave, hButtonInstall;
 
+// Forward declarations
+int APIENTRY WindowedModeWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int);
+
 // Function to get the path to matrix.txt
 // creates ColorEffectCmd folder in AppData/Local if it doesn't exist
 std::wstring GetMatrixFilePath() {
@@ -364,6 +367,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 // Main function
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	if (__argc > 1 && strcmp(__argv[1], "/w") == 0) {
+		// /w option to run in windowed mode
+		return WindowedModeWinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	}
+	
 	// Register window class
 	WNDCLASS wc = { 0 };
 	wc.lpfnWndProc = WndProc;
